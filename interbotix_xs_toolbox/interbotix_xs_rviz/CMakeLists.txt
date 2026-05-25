@@ -9,13 +9,13 @@ if(CMAKE_COMPILER_IS_GNUXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# Qt5 boilerplate options from http://doc.qt.io/qt-5/cmake-manual.html
+# Qt6 boilerplate
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
 find_package(ament_cmake REQUIRED COMPONENTS)
 find_package(pluginlib REQUIRED)
-find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 find_package(rclcpp REQUIRED)
 find_package(rviz_common REQUIRED)
 find_package(interbotix_xs_msgs REQUIRED)
@@ -30,7 +30,7 @@ include_directories(
 
 add_definitions(-DQT_NO_KEYWORDS)
 
-qt5_wrap_ui(UIC_FILES src/ui/interbotix_control_panel.ui)
+qt6_wrap_ui(UIC_FILES src/ui/interbotix_control_panel.ui)
 
 set(library_name ${PROJECT_NAME})
 
@@ -57,16 +57,16 @@ set(dependencies
 target_link_libraries(${library_name}
   PRIVATE
   pluginlib::pluginlib
-  Qt5::Core
-  Qt5::Gui
-  Qt5::Widgets
+  Qt6::Core
+  Qt6::Gui
+  Qt6::Widgets
   rclcpp::rclcpp
   rviz_common::rviz_common
   ${interbotix_xs_msgs_TARGETS}
 )
 
 target_include_directories(${library_name} PUBLIC
-  ${Qt5Widgets_INCLUDE_DIRS}
+  ${Qt6Widgets_INCLUDE_DIRS}
   ${OGRE_INCLUDE_DIRS}
 )
 
@@ -102,7 +102,7 @@ endif()
 
 ament_export_targets(${library_name} HAS_LIBRARY_TARGET)
 ament_export_dependencies(
-  Qt5
+  Qt6
   rviz_common
   rclcpp
   interbotix_xs_msgs
