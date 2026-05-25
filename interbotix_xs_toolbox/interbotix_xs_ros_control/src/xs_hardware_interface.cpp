@@ -36,9 +36,12 @@
 namespace interbotix_xs_ros_control
 {
 
-CallbackReturn XSHardwareInterface::on_init(const hardware_interface::HardwareInfo & info)
+CallbackReturn XSHardwareInterface::on_init(
+  const hardware_interface::HardwareComponentInterfaceParams & params)
 {
-  info_ = info;
+  if (hardware_interface::SystemInterface::on_init(params) != CallbackReturn::SUCCESS) {
+    return CallbackReturn::ERROR;
+  }
 
   nh = std::make_shared<rclcpp::Node>("xs_hardware_interface");
   executor = std::make_shared<rclcpp::executors::MultiThreadedExecutor>();
