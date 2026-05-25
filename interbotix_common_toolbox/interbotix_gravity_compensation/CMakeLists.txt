@@ -41,11 +41,11 @@ target_link_libraries(interbotix_gravity_compensation
   PRIVATE
   ${interbotix_xs_msgs_TARGETS}
   kdl_parser::kdl_parser
-  orocos_kdl_vendor::orocos_kdl_vendor
+  orocos-kdl
   rclcpp::rclcpp
   ${sensor_msgs_TARGETS}
   ${std_srvs_TARGETS}
-  yaml_cpp_vendor::yaml_cpp_vendor
+  yaml-cpp
 )
 install(
   TARGETS

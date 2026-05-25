@@ -33,7 +33,7 @@ target_link_libraries(tf_rebroadcaster
   PRIVATE
   ${geometry_msgs_TARGETS}
   rclcpp::rclcpp
-  rclcpp_components::component
+  rclcpp_components::component_manager
   ${tf2_msgs_TARGETS}
   tf2_ros::tf2_ros
   yaml-cpp
