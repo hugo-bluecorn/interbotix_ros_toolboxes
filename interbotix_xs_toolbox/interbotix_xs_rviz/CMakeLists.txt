@@ -61,16 +61,13 @@ target_link_libraries(${library_name}
   Qt5::Gui
   Qt5::Widgets
   rclcpp::rclcpp
+  rviz_common::rviz_common
   ${interbotix_xs_msgs_TARGETS}
 )
 
 target_include_directories(${library_name} PUBLIC
   ${Qt5Widgets_INCLUDE_DIRS}
   ${OGRE_INCLUDE_DIRS}
-)
-
-target_link_libraries(${library_name}
-  rviz_common::rviz_common
 )
 
 target_compile_definitions(${library_name} PRIVATE "RVIZ_DEFAULT_PLUGINS_BUILDING_LIBRARY")
