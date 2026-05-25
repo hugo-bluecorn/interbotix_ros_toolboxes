@@ -133,7 +133,7 @@ private:
    * @details This function computes the current commands needed to compensate for gravity and
    *   publishes them to the <namespace>/commands/joint_group topic
    */
-  void joint_state_cb(const sensor_msgs::msg::JointState::SharedPtr msg);
+  void joint_state_cb(sensor_msgs::msg::JointState::ConstSharedPtr msg);
 
   /**
    * @brief Callback function for the 'gravity_compensation_enable' service

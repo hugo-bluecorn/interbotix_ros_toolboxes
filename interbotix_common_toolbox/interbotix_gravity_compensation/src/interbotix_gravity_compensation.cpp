@@ -77,19 +77,19 @@ InterbotixGravityCompensation::InterbotixGravityCompensation(
     std::bind(
       &InterbotixGravityCompensation::gravity_compensation_enable_cb, this,
       std::placeholders::_1, std::placeholders::_2),
-    rmw_qos_profile_services_default, reentrant_callback_group);
+    rclcpp::ServicesQoS(), reentrant_callback_group);
 
   // Create the client for the 'RobotInfo' service
   robot_info_client_ = this->create_client<interbotix_xs_msgs::srv::RobotInfo>(
-    "get_robot_info", rmw_qos_profile_services_default, reentrant_callback_group);
+    "get_robot_info", rclcpp::ServicesQoS(), reentrant_callback_group);
 
   // Create the client for the 'OperatingModes' service
   operating_modes_client_ = this->create_client<interbotix_xs_msgs::srv::OperatingModes>(
-    "set_operating_modes", rmw_qos_profile_services_default, reentrant_callback_group);
+    "set_operating_modes", rclcpp::ServicesQoS(), reentrant_callback_group);
 
   // Create the client for the 'TorqueEnable' service
   torque_enable_client_ = this->create_client<interbotix_xs_msgs::srv::TorqueEnable>(
-    "torque_enable", rmw_qos_profile_services_default, reentrant_callback_group);
+    "torque_enable", rclcpp::ServicesQoS(), reentrant_callback_group);
 
   // Wait for the 'RobotInfo' service to be available
   while (!robot_info_client_->wait_for_service(std::chrono::seconds(1))) {
@@ -173,7 +173,7 @@ InterbotixGravityCompensation::InterbotixGravityCompensation(
 }
 
 void InterbotixGravityCompensation::joint_state_cb(
-  const sensor_msgs::msg::JointState::SharedPtr msg)
+  sensor_msgs::msg::JointState::ConstSharedPtr msg)
 {
   // Early return if gravity compensation is disabled
   enable_mutex_.lock();
