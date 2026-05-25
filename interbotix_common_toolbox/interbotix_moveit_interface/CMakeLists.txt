@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.14)
 project(interbotix_moveit_interface)
 
 if(NOT CMAKE_C_STANDARD)
@@ -6,7 +6,7 @@ if(NOT CMAKE_C_STANDARD)
 endif()
 
 if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD 20)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -40,7 +40,15 @@ include_directories(
 )
 
 add_executable(moveit_interface src/moveit_interface.cpp src/moveit_interface_obj.cpp)
-ament_target_dependencies(moveit_interface ${MOVEIT_INTERFACE_DEPENDENCIES})
+target_link_libraries(moveit_interface
+  PRIVATE
+  ${interbotix_moveit_interface_msgs_TARGETS}
+  ${moveit_msgs_TARGETS}
+  ${geometry_msgs_TARGETS}
+  moveit_ros_planning_interface::moveit_ros_planning_interface
+  moveit_visual_tools::moveit_visual_tools
+  rclcpp::rclcpp
+)
 
 #############
 ## Install ##

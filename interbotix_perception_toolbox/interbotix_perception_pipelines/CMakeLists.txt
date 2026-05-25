@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.14)
 project(interbotix_perception_pipelines)
 
 if(NOT CMAKE_C_STANDARD)
@@ -6,7 +6,7 @@ if(NOT CMAKE_C_STANDARD)
 endif()
 
 if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD 20)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -36,7 +36,17 @@ set(
 )
 
 add_executable(pointcloud_pipeline src/pointcloud_pipeline.cpp)
-ament_target_dependencies(pointcloud_pipeline ${PERCEPTION_PIPELINE_ROS_DEPENDENCIES})
+target_link_libraries(pointcloud_pipeline
+  PRIVATE
+  ament_index_cpp::ament_index_cpp
+  ${interbotix_perception_msgs_TARGETS}
+  pcl_conversions::pcl_conversions
+  pcl_ros::pcl_ros
+  rclcpp::rclcpp
+  ${sensor_msgs_TARGETS}
+  ${std_srvs_TARGETS}
+  ${visualization_msgs_TARGETS}
+)
 
 install(
   TARGETS

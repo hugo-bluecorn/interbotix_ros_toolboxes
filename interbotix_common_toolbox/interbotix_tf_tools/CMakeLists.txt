@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.14)
 project(interbotix_tf_tools)
 
 if(NOT CMAKE_C_STANDARD)
@@ -6,7 +6,7 @@ if(NOT CMAKE_C_STANDARD)
 endif()
 
 if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD 20)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -29,15 +29,15 @@ add_library(tf_rebroadcaster SHARED
 target_compile_definitions(tf_rebroadcaster
   PRIVATE "COMPOSITION_BUILDING_DLL"
 )
-ament_target_dependencies(
-  tf_rebroadcaster
-    geometry_msgs
-    rclcpp
-    rclcpp_components
-    tf2_msgs
-    tf2_ros
+target_link_libraries(tf_rebroadcaster
+  PRIVATE
+  ${geometry_msgs_TARGETS}
+  rclcpp::rclcpp
+  rclcpp_components::component
+  ${tf2_msgs_TARGETS}
+  tf2_ros::tf2_ros
+  yaml-cpp
 )
-target_link_libraries(tf_rebroadcaster yaml-cpp)
 rclcpp_components_register_nodes(tf_rebroadcaster "interbotix_tf_tools::TFRebroadcaster")
 
 install(

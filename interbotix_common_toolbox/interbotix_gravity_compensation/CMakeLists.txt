@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.14)
 project(interbotix_gravity_compensation)
 
 if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD 20)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -37,7 +37,16 @@ set(ROS_DEPENDENCIES
 
 # C++ installation
 add_executable(interbotix_gravity_compensation src/interbotix_gravity_compensation_node.cpp src/interbotix_gravity_compensation.cpp)
-ament_target_dependencies(interbotix_gravity_compensation ${ROS_DEPENDENCIES})
+target_link_libraries(interbotix_gravity_compensation
+  PRIVATE
+  ${interbotix_xs_msgs_TARGETS}
+  kdl_parser::kdl_parser
+  orocos_kdl_vendor::orocos_kdl_vendor
+  rclcpp::rclcpp
+  ${sensor_msgs_TARGETS}
+  ${std_srvs_TARGETS}
+  yaml_cpp_vendor::yaml_cpp_vendor
+)
 install(
   TARGETS
     interbotix_gravity_compensation

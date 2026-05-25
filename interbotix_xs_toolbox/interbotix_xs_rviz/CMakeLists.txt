@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.14)
 project(interbotix_xs_rviz)
 
 if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 17)
+  set(CMAKE_CXX_STANDARD 20)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -54,8 +54,14 @@ set(dependencies
   interbotix_xs_msgs
 )
 
-ament_target_dependencies(${library_name}
-  ${dependencies}
+target_link_libraries(${library_name}
+  PRIVATE
+  pluginlib::pluginlib
+  Qt5::Core
+  Qt5::Gui
+  Qt5::Widgets
+  rclcpp::rclcpp
+  ${interbotix_xs_msgs_TARGETS}
 )
 
 target_include_directories(${library_name} PUBLIC
